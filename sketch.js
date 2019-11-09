@@ -10,14 +10,15 @@ canvas.style = "position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px
 
 canvas.width=canvas.height=600;
 const FR=15;
-const S=20;
+const S=15;
 const T=canvas.width/S;
 
-let pos,snake,vel,food;
+let pos,snake,vel,food,prevKey=0;
 
 
 function init()
 {
+    prevKey=0;
     pos={x:10,y:10};
     vel={x:0,y:0};
 
@@ -53,27 +54,29 @@ document.addEventListener('keydown',keydown);
 function keydown(e)
 {
 
-    switch(e.keyCode){
-        case 37:
-            return vel={x:-1,y:0};
-        case 38:
-            return vel={x:0,y:-1};
-        case 39:
-            return vel={x:1,y:0};
-        case 40:
-            return vel={x:0,y:1};
-
-
-        case 65:
-            return vel={x:-1,y:0};
-        case 87:
-            return vel={x:0,y:-1};
-        case 68:
-            return vel={x:1,y:0};
-        case 83:
-            return vel={x:0,y:1};
+    if((e.keyCode==37||e.keyCode==65)&&prevKey!=39&&prevKey!=68)
+    {
+        prevKey=e.keyCode;
+        return vel={x:-1,y:0};
     }
+    if((e.keyCode==38||e.keyCode==87)&&prevKey!=40&&prevKey!=83)
+    {
+        prevKey=e.keyCode;
+        return vel={x:0,y:-1};
+    }
+    if((e.keyCode==39||e.keyCode==68)&&prevKey!=37&&prevKey!=65)
+    {
+        prevKey=e.keyCode;
+        return vel={x:1,y:0};
+    }
+    if((e.keyCode==40||e.keyCode==83)&&prevKey!=38&&prevKey!=87)
+    {
+        prevKey=e.keyCode;
+        return vel={x:0,y:1};
+    }
+    else return;
 
+    
 
 }
 
@@ -126,3 +129,20 @@ function gameLoop()
     }
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
